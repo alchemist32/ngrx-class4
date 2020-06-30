@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "entriesExits",
+      "public": "dist/entriesExits",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

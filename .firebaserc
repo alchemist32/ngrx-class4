@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "entries-exits-app": {
+      "hosting": {
+        "entriesExits": [
+          "entries-exits-app"
+        ]
+      }
+    }
+  }
+}

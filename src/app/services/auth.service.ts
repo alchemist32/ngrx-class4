@@ -15,6 +15,7 @@ import { setUser, unsetUser } from '../auth/auth.actions';
 export class AuthService {
 
   private userSubscription: Subscription;
+  private _userData: User;
 
   constructor(
     public auth: AngularFireAuth,
@@ -28,9 +29,11 @@ export class AuthService {
         this.userSubscription = this.firestore.doc(`${user.uid}/user`).valueChanges()
           .subscribe((firestoreUser: any) => {
             const castUser = User.fromFirebase(firestoreUser)
+            this._userData = castUser;
             this.store.dispatch( setUser({user: castUser}) );
           });
       } else {
+        this._userData = null;
         this.userSubscription.unsubscribe();
         this.store.dispatch(unsetUser());
       }
@@ -59,6 +62,10 @@ export class AuthService {
       .pipe(
         map((user) => user !== null)
       );
+  }
+  
+  get userInfo(): User {
+    return this._userData;
   }
 
 }

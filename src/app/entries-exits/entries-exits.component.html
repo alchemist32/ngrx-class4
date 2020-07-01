@@ -7,14 +7,15 @@
             Especifique el monto y el tipo
           </p>
           <!-- form -->
-          <div action="#">
+          <form [formGroup]="entriesExitsForm" (ngSubmit)="saveForm()">
             
             <div class="form-group">
               <label>Descripción</label>
               <input type="text" 
                      class="form-control" 
                      placeholder="Descripción"
-                     name="descripcion">
+                     name="descripcion"
+                     formControlName="description">
             </div>
 
             <div class="form-group">
@@ -22,7 +23,8 @@
                 <input type="number" 
                        class="form-control" 
                        placeholder="Monto"
-                       name="monto">
+                       name="monto"
+                       formControlName="amount">
                   <p>
                     Debe de ser un monto positivo
                   </p>
@@ -31,14 +33,34 @@
             <div class="form-group">
                 <label>Tipo</label>
                 <br>
-                <button type="button" class="btn btn-primary btn-block">Ingreso</button>
-                <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
+                <button
+                  type="button"
+                  class="btn btn-primary btn-block"
+                  (click)="type = 'exit'"
+                  *ngIf="type === 'entry'">
+                    Ingreso
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-block"
+                  (click)="type = 'entry'"
+                  *ngIf="type === 'exit'">
+                    Egreso
+                </button>
             </div>
 
             <hr>
-            <button type="button" class="btn btn-success mr-2">
+            <button type="submit" class="btn btn-success mr-2"
+            [disabled]="entriesExitsForm.invalid"
+            *ngIf="!loading">
               <i class="fa fa-save"></i>
-              Agregar
+              Add
+            </button>
+            <button type="submit" class="btn btn-success mr-2"
+            [disabled]="true"
+            *ngIf="loading">
+              <i class="fa fa-spin fa-sync"></i>
+              Loading...
             </button>
 
             <!-- 
@@ -50,7 +72,7 @@
             
             <button type="reset" class="btn btn-light">Cancelar</button>
 
-          </div>
+          </form>
         </div>
       </div>
     </div>
